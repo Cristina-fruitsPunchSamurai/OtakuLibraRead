@@ -1,0 +1,28 @@
+
+services:
+  laravelapp:
+  # the container running the Laravel application will be named "laravelapp."
+    container_name: laravelapp
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+  # the container running the PostgreSQL database will be named "db."
+    container_name: db
+    image: postgres:12
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_USER: livres
+      POSTGRES_PASSWORD: livres
+      POSTGRES_DB: livres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
