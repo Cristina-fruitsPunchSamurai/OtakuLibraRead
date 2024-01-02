@@ -11,14 +11,14 @@ class TagController extends Controller
     public function index() {
         $tags = Tag::all();
 
-        return response()->json($tags);
+        return response()->json($tags, 200);
     }
 
     //*** Affiche tous les mangas asscoiés à un tag particulier */
     public function show(string $id) {
         $tag = Tag::with('mangas')->find($id);
 
-        return response()->json($tag);
+        return response()->json($tag, 200);
     }
 
     //*** Ajoute un tag à la DB
@@ -36,7 +36,7 @@ class TagController extends Controller
             $newTag->name = $dataValidated['name'];
             $newTag->save();
 
-            return response()->json($newTag);
+            return response()->json(['message' => 'Tag created successfully'], 201,$newTag);
 
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 409);

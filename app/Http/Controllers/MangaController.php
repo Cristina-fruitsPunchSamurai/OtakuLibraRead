@@ -9,22 +9,25 @@ use Illuminate\Http\Request;
 
 class MangaController extends Controller
 {
-    //*** Affiche tous les mangas avec tous leurs tags et auteurs associés
+/*---------------------- Affiche tous les mangas avec tous leurs tags et auteurs associés -------------------------------*/
+
     public function index() {
         $mangas = Manga::with('authors')->with('tags')->orderBy('title', 'asc')->get();
 
-        return response()->json($mangas);
+        return response()->json($mangas, 200);
     }
 
 
-    //*** Affiche un manga avec tous ses tags et auteurs associés
+/*---------------------- Affiche UN manga avec tous ses tags et auteurs associés -------------------------------*/
+
     public function show(string $id) {
         $manga = Manga::with('authors')->with('tags')->find($id);
 
-        return response()->json($manga);
+        return response()->json($manga, 200);
     }
 
-    //*** Enregistre un nouveau manga dans la base de données
+/*---------------------- Enregistre un nouveau manga dans la base de données -------------------------------*/
+
     public function store(Request $request) {
         try{
             //on valide nos données du formulaire
@@ -72,7 +75,7 @@ class MangaController extends Controller
                 $newManga->tags()->attach($tag);
             }
 
-            return response()->json($newManga);
+            return response()->json(['message' => 'Manga created successfully'], 201, $newManga);
 
         } catch (\Exception $e) {
         \Log::error('Error when creating the new record: ' . $e->getMessage());
@@ -80,17 +83,19 @@ class MangaController extends Controller
         }
     }
 
-    //*** Supprime un manga
+/*---------------------- Supprime un manga -------------------------------*/
+
     public function destroy(string $id) {
         try {
             $manga = Manga::findOrFail($id)->delete();
-            return response()->json('The manga has been deleted');
+            return response()->json('The manga has been deleted', 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Manga not found'], 404);
         }
     }
 
-    //*** Met à jour un manga */
+/*---------------------- Met à jour un manga -------------------------------*/
+
     public function update(Request $request, string $id) {
         try {
             $validatedData = $request->validate([
@@ -147,7 +152,8 @@ class MangaController extends Controller
         }
     }
 
-        //Supprime un tag d'un manga
+/*---------------------- Supprime un tag d'un manga -------------------------------*/
+
         public function detachTag(Request $request, string $id) {
             try {
                 $validatedData = $request->validate([
@@ -156,7 +162,7 @@ class MangaController extends Controller
 
                 $manga = Manga::findOrFail($id);
 
-                //Je supprime les tags de ce manga avvec detach qui supprime l'association, contraire d'attach par exemple
+                //Je supprime les tags de ce manga avec detach qui supprime l'association, contraire d'attach par exemple
                 foreach($validatedData['tagIdArray'] as $tag){
                     $eraseTag = $manga->tags()->detach($tag);
                 }

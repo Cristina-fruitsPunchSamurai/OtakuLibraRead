@@ -9,6 +9,7 @@ use Database\Seeders\TagsSeeder;
 use Database\Seeders\MangasSeeder;
 use Database\Seeders\AuthorsMangasSeeder;
 use Database\Seeders\MangasTagsSeeder;
+use Database\Seeders\RolesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         MangasSeeder::class,
         AuthorsMangasSeeder::class,
         MangasTagsSeeder::class,
+        RolesSeeder::class,
     ]);
     }
 }

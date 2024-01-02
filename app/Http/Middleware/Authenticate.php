@@ -12,6 +12,10 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
-    }
+        //Si le token n'est pas inclut dans les headers on envoit une erreur
+        if (!$request->expectsJson()) {
+            return response()->json(['error' => 'Token not found'], 401);
+        }
+
+}
 }

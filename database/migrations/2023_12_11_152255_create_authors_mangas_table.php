@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('manga_has_author');
+        Schema::dropIfExists('authors_mangas');
     }
 };
