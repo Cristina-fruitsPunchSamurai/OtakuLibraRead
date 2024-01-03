@@ -83,6 +83,20 @@ class MangaController extends Controller
         }
     }
 
+/*---------------------- Affiche 5 mangas aléatoirement -------------------------------*/
+    public function randomMangas(){
+        try {
+            $randomMangas = Manga::inRandomOrder()->limit(5)->get();
+
+            return response()->json($randomMangas, 200);
+
+        }catch(\Exception $e){
+            \Log::error('Error when displaying random mangas' . $e->getMessage());
+            return response()->json(['error' => 'Error when displaying random mangas'], 500);
+        }
+
+    }
+
 /*---------------------- Supprime un manga -------------------------------*/
 
     public function destroy(string $id) {

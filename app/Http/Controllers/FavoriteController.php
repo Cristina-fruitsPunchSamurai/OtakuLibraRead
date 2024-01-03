@@ -28,7 +28,7 @@ class FavoriteController extends Controller
         }
     }
 
-/*----------------------------------- Ajouter en favoris----------------------------------*/
+/*----------------------------------- Ajouter à favoris----------------------------------*/
     public function addFavorite(string $mangaId){
         try {
             //Vérifie que l'utilisateur est authentifié
@@ -44,12 +44,25 @@ class FavoriteController extends Controller
 
         }catch(\Exception $e){
             \Log::error('Error on favorite mangas ' . $e->getMessage());
-            return response()->json(['error' => 'Error when displaying favorite mangas'], 500);
+            return response()->json(['error' => 'Error when adding a favorite mangas'], 500);
 
         }
     }
 /*----------------------------------- Supprimer un favoris ----------------------------------*/
-    public function deleteFavorite(){
+    public function deleteFavorite(string $mangaId){
+        try{
+            if(!Auth::check()){
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+            $id = Auth::id();
+            $user = User::find($id);
+            $detachFavoriteManga = $user->favoriteMangas()->detach($mangaId);
 
+            return response()->json(['message' => 'Manga deleted from favorites'], 200);
+        }catch(\Exception $e){
+            \Log::error('Error on favorite mangas' . $e->getMessage());
+            return response()->json(['error' => 'Error when deleting a favorite manga'], 500);
+
+        }
     }
 }

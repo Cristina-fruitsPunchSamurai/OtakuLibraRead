@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    //*** Affiche tous les tags
+/*----------------------------------- Affiche tous les tags ----------------------------------*/
+
     public function index() {
         $tags = Tag::all();
 
         return response()->json($tags, 200);
     }
 
-    //*** Affiche tous les mangas asscoiés à un tag particulier */
+/*----------------------------------- Affiche tous les mangas associés à un tag particulier ----------------------------------*/
+
     public function show(string $id) {
         $tag = Tag::with('mangas')->find($id);
 
@@ -43,7 +45,8 @@ class TagController extends Controller
         }
     }
 
-    //*** Met à jour un tag */
+/*----------------------------------- Met à jour un tag ----------------------------------*/
+
     public function update(Request $request , string $id) {
         try{
             $dataValidated = $request->validate(
@@ -64,7 +67,8 @@ class TagController extends Controller
         }
     }
 
-    //*** Supprime un tag
+/*----------------------------------- Supprime un tag ----------------------------------*/
+
     public function destroy(string $id) {
         try {
             $tag = Tag::findOrFail($id)->delete();

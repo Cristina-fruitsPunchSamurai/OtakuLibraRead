@@ -37,18 +37,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/profile', [ProfileController::class, 'updateProfile']);
     Route::get('/favorite', [FavoriteController::class, 'showFavorites']);
     Route::post('/favorite/{mangaId}', [FavoriteController::class, 'addFavorite']);
+    Route::delete('/favorite/{mangaId}', [FavoriteController::class, 'deleteFavorite']);
 });
 
 
 /*----------------------------------- Mangas ----------------------------------*/
 Route::get('/mangas', [MangaController::class, 'index']);
-Route::post('/mangas', [MangaController::class, 'store']);
+Route::post('/manga', [MangaController::class, 'store']);
 Route::get('manga/{id}', [MangaController::class, 'show']);
 Route::delete('manga/{id}', [MangaController::class, 'destroy']);
 Route::put('manga/{id}', [MangaController::class, 'update']);
+Route::get('mangas/random', [MangaController::class, 'randomMangas']);
 
 
 /*----------------------------------- Tags ----------------------------------*/
 Route::get('/tags', [TagController::class, 'index']);
-Route::post('/tags', [TagController::class, 'store']);
+Route::post('/tag', [TagController::class, 'store']);
 Route::put('/tag/{id}', [TagController::class, 'update']);
+Route::delete('/tag/{id}', [TagController::class, 'destroy']);
