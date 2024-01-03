@@ -32,7 +32,9 @@ class Manga extends Model
     public function addToFavoriteBy(): BelongsToMany
     {
         //  la méthode BelongsToMany attend 4 paramètres dont nom de la table pivot, $foreignPivotKey et $relatedPivotKey = null,
-        return $this->belongsToMany(User::class, 'favorite_manga','user_id', 'manga_id')
+        //!!!! Faire bien attention à l'ordre des paramètres!!!!
+        return $this->belongsToMany(User::class, 'favorite_manga','manga_id', 'user_id')
         ->withTimestamps();
+
     }
 }

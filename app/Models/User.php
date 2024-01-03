@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -32,7 +34,7 @@ class User extends Authenticatable
     //**un user peut avoir plusieurs mangas favoris
     public function favoriteMangas(): BelongsToMany
     {
-        return $this->belongsToMany(Manga::class, 'favorite_manga','manga_id', 'user_id')
+        return $this->belongsToMany(Manga::class, 'favorite_manga', 'user_id', 'manga_id',)
         //->as('')
         ->withTimestamps();
     }

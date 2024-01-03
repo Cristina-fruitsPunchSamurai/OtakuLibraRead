@@ -28,7 +28,7 @@ class AuthController extends Controller
         if(Hash::check($credentials['password'], $user->password)){
             return[
                 'token'=>$user->createToken(time())->plainTextToken
-                //côté client je vais stocken ce plain text token
+                //côté client je vais stocker ce plain text token
             ];
 
         }
